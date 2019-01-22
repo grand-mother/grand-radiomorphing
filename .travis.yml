@@ -1,0 +1,31 @@
+matrix:
+  include:
+    - name: "Linux :: Python 3.7"
+      os: linux
+      language: python
+      python: 3.7
+      dist: xenial
+      sudo: yes
+      env:
+        - PYTHONPATH=/home/travis/.local/lib/python3.7/site-packages/:$PYTHONPATH
+        - PATH=/home/travis/.local/bin/:$PATH
+    - name: "OSX :: Python 3.7"
+      os: osx
+      language: generic
+      env:
+        - PYTHONPATH=/users/travis/Library/Python/3.7/lib/site-packages/:$PYTHONPATH
+        - PATH=/users/travis/Library/Python/3.7/bin/:$PATH
+
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew unlink python && brew install https://raw.githubusercontent.com/Homebrew/homebrew-core/fd8bca8d1cf515bab1da7389afaffec71025cbd3/Formula/python.rb; fi
+
+install:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then pip3.7 install codecov; fi
+  - pip3.7 install git+https://github.com/grand-mother/framework.git@master
+  - python3.7 setup.py install --user --prefix=
+
+script:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then coverage run tests; else python3.7 setup.py test; fi
+
+after_success:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then codecov; fi

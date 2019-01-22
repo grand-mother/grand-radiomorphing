@@ -1,0 +1,14 @@
+# Ignore the dist/version module
+version.py
+
+# Ignore Python bytecode
+*.pyc
+*.pyo
+
+# Ignore build and dist temporaries
+dist
+build
+*.egg-info
+
+# Ignore temporary coverage reports
+.coverage
