@@ -29,9 +29,8 @@ def main():
             "scipy>=1.2.0",
             "autopep8>=1.4.0"
             )
-
-
+        )
 
 
 if __name__ == "__main__":
-    main()
+        main()
