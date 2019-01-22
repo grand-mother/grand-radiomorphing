@@ -32,7 +32,7 @@ def run():
     # Perform the radiomorphing
     grand_radiomorphing.process(sim_dir, shower, antennas, out_dir)
 
-    sys.exit()
+    sys.exit(0)
 
 
 if __name__ == "__main__":
