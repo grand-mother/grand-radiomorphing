@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Add a brief description
+Produce radio signals with Radio Morphing
 
 Copyright (C) 2018 The GRAND collaboration
 
@@ -27,3 +27,9 @@ except ImportError:
     __githash__ = None
 
 # Initialise the package below
+# Export the package public functions
+from .scaling import scale
+from .core import interpolate, process
+
+# Register all modules
+__all__ = ["core", "frame", "interpolation", "scaling", "utils"]
