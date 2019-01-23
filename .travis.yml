@@ -7,7 +7,7 @@ matrix:
       dist: xenial
       sudo: yes
       env:
-        - COVERAGE
+        - COVERAGE=1
         - PIP=pip3.7
         - PYTHON=python3.7
         - PYTHONPATH=/home/travis/.local/lib/python3.7/site-packages/:$PYTHONPATH
@@ -39,7 +39,7 @@ install:
   - $PYTHON setup.py install --user --prefix=
 
 script:
-  - if [[ COVERAGE && "$TRAVIS_OS_NAME" == "linux" ]]; then coverage run tests; else $PYTHON setup.py test; fi
+  - if [[ $COVERAGE ]]; then coverage run tests; else $PYTHON setup.py test; fi
 
 after_success:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then codecov; fi
