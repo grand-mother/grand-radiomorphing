@@ -1,19 +1,20 @@
-from frame import UVWGetter, XYZGetter, get_rotation  # , GetUVW
-from utils import getCerenkovAngle, load_trace
-import utils
-import frame
 '''
 Performs the scaling of given electric field traces and the isometry of the antenna positions for a reference shower according to the parameters of a target shower
 '''
-
 from __future__ import print_function
+
 import os
 import sys
 import numpy as np
 from os.path import split, join, realpath
+
 # Expand the PYTHONPATH and import the radiomorphing package
 root_dir = realpath(join(split(__file__)[0], ".."))
 sys.path.append(join(root_dir, "grand_radiomorphing"))
+import utils
+import frame
+from frame import UVWGetter, XYZGetter, get_rotation  # , GetUVW
+from utils import getCerenkovAngle, load_trace
 
 
 def _getAirDensity(h):

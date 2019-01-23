@@ -97,35 +97,35 @@ def get_integratedn(zen2, injh2, position):
 
     # values of parameters for refractive index
     ns = 325E-06
-     kr = -0.1218E-03
+    kr = -0.1218E-03
 
-      # print "inhh, antenna height ", injh2, position[2]
-      summe = 0.
-       for i in range(0, nint):
-            nextpx = currpx+kx
-            nextpy = currpy+ky
-            nextpz = currpz+kz
+    # print "inhh, antenna height ", injh2, position[2]
+    summe = 0.
+    for i in range(0, nint):
+        nextpx = currpx+kx
+        nextpy = currpy+ky
+        nextpz = currpz+kz
 
-            nextR = numpy.sqrt(nextpx*nextpx + nextpy*nextpy)
-            nexth = (numpy.sqrt(((injh2 - nextpz) + Re) *
-                                ((injh2 - nextpz) + Re) + nextR*nextR) - Re) / 1e3
+        nextR = numpy.sqrt(nextpx*nextpx + nextpy*nextpy)
+        nexth = (numpy.sqrt(((injh2 - nextpz) + Re) *
+                            ((injh2 - nextpz) + Re) + nextR*nextR) - Re) / 1e3
 
-            if (abs(currh-nexth) > 1e-10):
-                summe = summe + (numpy.exp(kr*nexth) -
+        if (abs(currh-nexth) > 1e-10):
+            summe = summe + (numpy.exp(kr*nexth) -
                                  numpy.exp(kr*currh)) / (kr*(nexth - currh))
-            else:
-                summe = summe + numpy.exp(kr*currh)
+        else:
+            summe = summe + numpy.exp(kr*currh)
 
-            currpx = nextpx
-            currpy = nextpy
-            currpz = nextpy
-            currR = nextR
-            currh = nexth
+        currpx = nextpx
+        currpy = nextpy
+        currpz = nextpy
+        currR = nextR
+        currh = nexth
 
-        avn = ns*summe/nint
-        n = 1. + avn
+    avn = ns*summe/nint
+    n = 1. + avn
 
-        return n  # integrated n
+    return n  # integrated n
 
 
 def mag(x):

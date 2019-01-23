@@ -1,6 +1,6 @@
 ''' Start the interpolation of the signal at a desired antenna position 
 on the basis of the rescaled electric field traces and the antenna position after the isometry.
-
+#
 Notes: 
 This script does the preperation for a interpolation of a complete pulse at any antenna position you desire.
 Therfore, you have to hand over a list of antenna position you would like to have, a file containing the 
@@ -10,7 +10,6 @@ and positions over to the interpolation script which performs the interpoaltion 
 whether you wanna use filtered traces is set in this script by hand at the beginning
 Tt returns files (t, Ex,Ey,Ez) in a folder, named InterpoaltedSignals, if it exists. 
 '''
-
 from __future__ import print_function
 import os
 import numpy as np
@@ -130,8 +129,8 @@ def interpolate(path0, path1, path2, zenith=None, azimuth=None, injection_height
     for i in np.arange(0, len(sims)):  # loop over simulated antenna positions
 
         posfile = path1 + str(sims[i]) + '/antpos.dat'
-        if DISPLAY == 1:
-            print(posfile)
+        #if DISPLAY == 1:
+            #print(posfile)
         positions_sims[i, :, :] = np.loadtxt(posfile)
 
     # if DISPLAY==1:
@@ -487,10 +486,10 @@ def interpolate(path0, path1, path2, zenith=None, azimuth=None, injection_height
         # Get the pulseshape for the projection on line 2
         point_online2 = _ProjectPointOnLine(
             positions_sims[dist_plane[0], d0[2]], positions_sims[dist_plane[0], d0[3]], Inter_plane0)  # Project Point on line 2
-        if DISPLAY == 1:
-            print('\n\n Projection 2 ')
-            print(positions_sims[dist_plane[0], d0[2]],
-                  positions_sims[dist_plane[0], d0[3]], point_online2)
+        #if DISPLAY == 1:
+            #print('\n\n Projection 2 ')
+            #print(positions_sims[dist_plane[0], d0[2]],
+                  #positions_sims[dist_plane[0], d0[3]], point_online2)
 
         # the interpolation of the pulse shape is performed
         txt2, txt3 = get_traces(0, d0, 2, 3)

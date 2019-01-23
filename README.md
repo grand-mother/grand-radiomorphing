@@ -4,7 +4,7 @@
     One should edit the docs/README.md file instead.
 -->
 
-[![Coding style](https://img.shields.io/badge/pep8-64%25-yellowgreen.svg)](https://github.com/grand-mother/grand-radiomorphing/blob/master/docs/.stats.json)
+[![Coding style](https://img.shields.io/badge/pep8-63%25-yellowgreen.svg)](https://github.com/grand-mother/grand-radiomorphing/blob/master/docs/.stats.json)
 [![Code coverage](https://codecov.io/gh/grand-mother/grand-radiomorphing/branch/master/graph/badge.svg)](https://codecov.io/gh/grand-mother/grand-radiomorphing)
 [![Build status](https://travis-ci.com/grand-mother/grand-radiomorphing.svg?branch=master)](https://travis-ci.com/grand-mother/grand-radiomorphing)
 [![PyPi version](https://img.shields.io/pypi/v/g.svg)](https://pypi.org/project/grand-radiomorphing)
