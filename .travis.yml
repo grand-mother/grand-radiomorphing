@@ -16,8 +16,6 @@ matrix:
       os: linux
       language: python
       python: 2.7
-      dist: xenial
-      sudo: yes
       env:
         - PIP=pip2.7
         - PYTHON=python2.7
@@ -27,6 +25,8 @@ matrix:
       os: osx
       language: generic
       env:
+        - PIP=pip3.7
+        - PYTHON=python3.7
         - PYTHONPATH=/users/travis/Library/Python/3.7/lib/site-packages/:$PYTHONPATH
         - PATH=/users/travis/Library/Python/3.7/bin/:$PATH
 
@@ -39,7 +39,7 @@ install:
   - $PYTHON setup.py install --user --prefix=
 
 script:
-  - if [[ COVERAGE && "$TRAVIS_OS_NAME" == "linux" ]]; then coverage run tests; else python3.7 setup.py test; fi
+  - if [[ COVERAGE && "$TRAVIS_OS_NAME" == "linux" ]]; then coverage run tests; else $PYTHON setup.py test; fi
 
 after_success:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then codecov; fi
