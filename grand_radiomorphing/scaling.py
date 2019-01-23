@@ -31,13 +31,13 @@ def _getAirDensity(h):
             air density in g/cm3
     '''
     
-  rho_0 = 1.225#; % kg/m3
-  M = 0.028966#;  %kg/mol
-  g = 9.81#; %ms-2
-  T = 288.#; % K
-  R = 8.32#;
-  rho = rho_0*np.exp(-g*M*h/(R*T))
-  return rho
+    rho_0 = 1.225#; % kg/m3
+    M = 0.028966#;  %kg/mol
+    g = 9.81#; %ms-2
+    T = 288.#; % K
+    R = 8.32#;
+    rho = rho_0*np.exp(-g*M*h/(R*T))
+    return rho
 
 ###################################
 
