@@ -1,8 +1,20 @@
+''' File collecting useful functions
+'''
+
 import numpy
 
 def load_trace(directory, index, suffix=".trace"):
     """Load data from a trace file
+
+    Args:
+        directory (str): path to file 
+        index (ind): index number of antenna
+        suffix (str): optional, suffix of file
+        
+    Returns:
+        numpy array
     """
+    
     path = "{:}/a{:}{:}".format(directory, index, suffix)
     with open(path, "r") as f:
         return numpy.array([list(map(float, line.split())) for line in f])
@@ -12,12 +24,34 @@ def getn(h):
 
        Reference:
         Zhaires (see email M. Tueros 25/11/2016)
+        
+   Arguments
+   ---------
+      h: float
+            height in meters at which one wants to have the refractive index
+ 
+   Returns
+   ---------
+        float
+            refractive angle
+        
     """
     # h in meters
     return 1. + 325E-06 * numpy.exp(-0.1218E-03 * h)
 
 def getCerenkovAngle(h):
    """Get the Cerenkov angle
+         
+   Arguments
+   ---------
+      h: float
+            height in meters at which one wants to have the Cherenkov angle
+ 
+   Returns
+   ---------
+        float
+            Cherenkov angle in radian
+    
    """
    return numpy.arccos(1. / getn(h))
 
@@ -25,9 +59,21 @@ def getCerenkovAngle(h):
 
 
 def get_integratedn(zen2, injh2, position):
-    
-    # assumption coordinate system so that tau decay at (0.,0, injectionheight)
-    # calculation of integrated n implemented similar as in Zhaires
+   '''Returns the effectiv/integrated refractive index at a specific height.
+   
+   Arguments:
+   ---------
+      zen2: float
+         zenith angle in radian at the starting point at height injh2
+      injh2: float
+         height in meters of the starting point, assuming it is defines as (0,0,injh2)
+        position: numpy array
+            defines endposition for integration (= observer position)
+   Returns:
+   -------
+      n: float
+         effectiv referactive index along the shower trajectory
+    '''
     
     Re= 6370949 # m, Earth radius
     ########
@@ -48,8 +94,7 @@ def get_integratedn(zen2, injh2, position):
     currpz=injh2
     currh=currpz # just in that case here, since particle injected directly induce a shower
     
-    
-    
+    # values of parameters for refractive index
     ns=325E-06
     kr=-0.1218E-03
     
@@ -83,4 +128,17 @@ def get_integratedn(zen2, injh2, position):
 
 
 def mag(x):
+    """Calculate absolute value of x
+        
+    Arguments
+    ---------
+      x: numpy array, floats
+            vector
+ 
+    Returns
+    ---------
+        float
+            absolute value of vector
+    """
+
     return numpy.sqrt(x.dot(x))

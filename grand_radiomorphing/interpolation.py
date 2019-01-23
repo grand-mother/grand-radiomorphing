@@ -1,18 +1,22 @@
-# This script bases on the diploma thesis of Ewa Holt (KIT, 2013) in the context of AERA/AUGER. It is based on the interpolation of the amplitude and the pahse in the frequency domain. 
-# This can lead to misidentifiying of the correct phase. We are working on the interplementaion on a more robust interpolation of the signal.
-# Feel free t include it if you have some time to work on it. The script is completely modular so that single parts can be substitute easily.
-#
-#called by core.py
-#needs as input antenna position 1 and 2, their traces (filtered or not) in one component, their time , and the desired antenna position
-# return the trace ( in x,y,z coordinate system) and the time from the desired antenna position
-#upsamples the signal
-#
-    ## IMPORTANT NOTE:
-    ## The interpolation of the phases includes the
-    ## interpolation of the signal arrival time. A linear interpolation implies a plane radio
-    ## emission wave front, which is a simplification as it is hyperbolic in shape. However, the wave front can be estimated as a plane between two simu-
-    ## lated observer positions for a sufficiently dense grid of observers, as then parts of
-    ## the wave front are linear on small scales.
+'''Script to perform an interpolation between to electric field traces at a desired position
+(called by core.py)
+
+It needs as input antenna position 1 and 2, their traces (filtered or not) in one component, their time , and the desired antenna position
+and returns the trace ( in x,y,z coordinate system) and the time from the desired antenna position
+Zeroadding and upsampling of the signal are optional functions
+
+IMPORTANT NOTE:
+The interpolation of the phases includes the
+interpolation of the signal arrival time. A linear interpolation implies a plane radio
+emission wave front, which is a simplification as it is hyperbolic in shape. However, the wave front can be estimated as a plane between two simu-
+lated observer positions for a sufficiently dense grid of observers, as then parts of
+the wave front are linear on small scales.
+
+This script bases on the diploma thesis of Ewa Holt (KIT, 2013) in the context of AERA/AUGER. It is based on the interpolation of the amplitude and the pahse in the frequency domain. 
+This can lead to misidentifiying of the correct phase. We are working on the interplementaion on a more robust interpolation of the signal.
+Feel free to include it if you have some time to work on it. The script is completely modular so that single parts can be substitute easily.
+'''
+    
 import numpy
 from scipy import signal
 from utils import getn
@@ -20,39 +24,48 @@ import operator
 
 
 #################################################################
+# Not needed at the moment, removed later
+#def rfftfreq(n, d=1.0, nyquist_domain=1):
+    #'''calcs frequencies for rfft, exactly as numpy.fft.rfftfreq, lacking that function in my old numpy version.
+    #Arguments:
+    #---------
+        #n: int
+            #Number of points.
+        #d: float
+            #Sample spacing, default is set to 1.0 to return in units of sampling freq.
 
-def rfftfreq(n, d=1.0, nyquist_domain=1):
-	'''calcs frequencies for rfft, exactly as numpy.fft.rfftfreq, lacking that function in my old numpy version.
-	Arguments:
-	---------
-		n: int
-			Number of points.
-		d: float
-			Sample spacing, default is set to 1.0 to return in units of sampling freq.
-
-	Returns:
-	-------
-		f: array of floats
-			frequencies of rfft, length is n/2 + 1
-	'''
-	if n % 2 == 0:
-		f = numpy.array([n/2 - i for i in range(n/2,-1,-1)]) / (d*n)
-	else:
-		f = numpy.array([(n-1)/2 + 1 - i for i in range(n/2,-1,-1)]) / (d*n)
-	# if nyquist_domain is 1 you're done and return directly
-	if nyquist_domain != 1:
-		# if nyquist_domain even, mirror frequencies
-		if (nyquist_domain % 2) == 0: f = f[::-1]
-		sampling_freq = 1./d
-		fmax = 0.5*sampling_freq
-		f += (nyquist_domain-1)*fmax
-	return f
-
+    #Returns:
+    #-------
+        #f: array of floats
+            #frequencies of rfft, length is n/2 + 1
+    #'''
+    #if n % 2 == 0:
+        #f = numpy.array([n/2 - i for i in range(n/2,-1,-1)]) / (d*n)
+    #else:
+        #f = numpy.array([(n-1)/2 + 1 - i for i in range(n/2,-1,-1)]) / (d*n)
+    ## if nyquist_domain is 1 you're done and return directly
+    #if nyquist_domain != 1:
+        ## if nyquist_domain even, mirror frequencies
+        #if (nyquist_domain % 2) == 0: f = f[::-1]
+        #sampling_freq = 1./d
+        #fmax = 0.5*sampling_freq
+        #f += (nyquist_domain-1)*fmax
+    #return f
 ####################################
 
 def unwrap(phi, ontrue=None):
     """Unwrap the phase to a strictly decreasing function.
+    
+    Arguments:
+    ----------
+        phi: numpy array, float
+            phase of the signal trace
+    Returns:
+    ----------
+        phi_unwrapped: numpy array, float
+            unwarpped phase of the signal trace
     """
+    
     phi_unwrapped= numpy.zeros(phi.shape)
     p0 = phi_unwrapped[0] = phi[0]
     pi2 = 2. * numpy.pi
@@ -67,7 +80,42 @@ def unwrap(phi, ontrue=None):
             print(i, phi[i],phi[i-1],l, phi_unwrapped[i], abs(phi[i]- phi[i-1]), abs(phi[i]- phi[i-1] + numpy.pi), abs(phi[i]- phi[i-1] - numpy.pi) , l)
     return phi_unwrapped
 
-def interpolate_trace(t1, trace1, x1, t2, trace2, x2, xdes, upsampling=None,  zeroadding=None, ontrue=None, flow=60.e6, fhigh=200.e6): #, nrdes):
+def interpolate_trace(t1, trace1, x1, t2, trace2, x2, xdes, upsampling=None,  zeroadding=None, ontrue=None, flow=60.e6, fhigh=200.e6):
+    """Interpolation of signal traces at the specific position in the frequency domain
+    
+    Arguments:
+    ----------
+            t1: numpy array, float
+                time in ns of antenna 1
+            trace1: numpy array, float
+                single component of the electric field's amplitude of antenna 1
+            x1: numpy array, float
+                position of antenna 1
+            t2: numpy array, float
+                time in ns of antenna 2
+            trace2: numpy array, float
+                single component of the electric field's amplitude of antenna 2
+            x2: numpy array, float
+                position of antenna 2
+            xdes: numpy arry, float
+                antenna position for which trace is desired, in meters
+            upsampling: str
+                optional, True/False, performs upsampling of the signal, by a factor 8
+            zeroadding: str
+                optional, True/False, adds zeros at the end of the trace of needed
+            ontrue: str
+                optional, True/False, just a plotting command
+            flow, fhigh: floats
+                optional, define the frequency range for plotting, if desired (DISPLAY=1/0)
+
+            
+    Returns:
+    ----------
+        xnew: numpy array, float
+            time for signal at desired antenna position in ns
+        tracedes: numpy array, float
+            interpolated electric field component at desired antenna position
+    """
     DISPLAY=0
 
     #hand over time traces of one efield component -t1=time, trace1=efield- and the position x1 of the first antenna, the same for the second antenna t2,trace2, x2.

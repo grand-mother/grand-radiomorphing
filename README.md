@@ -4,12 +4,12 @@
     One should edit the docs/README.md file instead.
 -->
 
-[![Coding style](https://img.shields.io/badge/pep8-4%25-red.svg)](https://github.com/grand-mother/grand-radiomorphing/blob/master/docs/.stats.json)
+[![Coding style](https://img.shields.io/badge/pep8--3%25-red.svg)](https://github.com/grand-mother/grand-radiomorphing/blob/master/docs/.stats.json)
 [![Code coverage](https://codecov.io/gh/grand-mother/grand-radiomorphing/branch/master/graph/badge.svg)](https://codecov.io/gh/grand-mother/grand-radiomorphing)
 [![Build status](https://travis-ci.com/grand-mother/grand-radiomorphing.svg?branch=master)](https://travis-ci.com/grand-mother/grand-radiomorphing)
 [![PyPi version](https://img.shields.io/pypi/v/g.svg)](https://pypi.org/project/grand-radiomorphing)
 
-# GRAND radiomorphing
+# GRAND Radiomorphing
 _Produce radio signals with Radio Morphing_
 
 Welcome to Radio Morphing!
@@ -18,6 +18,8 @@ These people made that tool amazing:
 W. Carvalho, K. de Vries, O. Martineau, K. Kotera V. Niess, M. Tueros, A. Zilles
 
 Details of the methods can be found in [arXiv:1811:01750](https://arxiv.org/abs/1811.01750).
+
+The usage of Radio Morphing with python2.7 is possible, but discouraged since maintenance of python2.7 will stop soon. 
 
 ## Description
 This is a preliminary version of the radio morphing Python package.
@@ -37,7 +39,7 @@ pip install --user grand-radiomorphing
 Alternatively one can also install the latest development commit directly from
 [GitHub][GITHUB], as:
 ```bash
-pip install --user git+https://github.com/grand-mother/radiomorphing.git@master
+pip install --user git+https://github.com/grand-mother/grand-radiomorphing.git@master
 ```
 
 
@@ -64,7 +66,7 @@ The internal coordinate system used in radiomorphing is defined the injection po
 In comparison to ZHAireS or CoREAS simulations, Radio Morphing expects the direction of propagation in  [GRAND conventions](https://github.com/grand-mother/simulations/blob/master/GRANDAngularConventions.pdf) as input.
 
  
-One important aspect is that the magnetic field configuration are hardcoded for the GRAND example location (Ulastai) in [scaling.py](https://github.com/grand-mother/radiomorphing/blob/afc77779bb0acc09e3458e9e5f0c0e68b77456f9/lib/python/radiomorphing/scaling.py#L287-L291). If needed that values (as well as the reference shower) have to be adapted.
+One important aspect is that the magnetic field configuration are hardcoded for the GRAND example location (Ulastai) in [scaling.py](https://github.com/grand-mother/radiomorphing/blob/afc77779bb0acc09e3458e9e5f0c0e68b77456f9/lib/python/grand-radiomorphing/scaling.py#L287-L291). If needed that values (as well as the reference shower) have to be adapted.
 
 
 ### Input overview
@@ -77,7 +79,7 @@ to be handed over as in [example.py](https://github.com/grand-mother/radiomorphi
 - injection height in m == z component/height wrt sealvel of the injection point in m, used to define the injection position as (0,0,injectionheight) as reference
 - altitude == actual height in m of injection above sealevel which can differ from the injectionheight in ase of Earth's curvature and differing original coordinate system for the desired antenna positions
 
-**desired antenna positions**: list of desired antenna positions handed over in x (along North-South, pointing to Magnetic North), y (along East-West), z (vertical, r.t. sealevel), since positions must be given in the reference frame defined by injection point, for example saved like  [antpos_desired.dat](https://github.com/grand-mother/radiomorphing/blob/master/examples/data/InterpolatedSignals/antpos_desired2.dat)
+**desired antenna positions**: list of desired antenna positions handed over in x (along North-South, pointing to Magnetic North), y (along East-West), z (vertical, r.t. sealevel), since positions must be given in the reference frame defined by injection point, for example saved like  [antpos_desired.dat](https://github.com/grand-mother/grand-radiomorphing/blob/master/examples/data/InterpolatedSignals/antpos_desired2.dat)
  
 **path reference shower**: the reference shower is simulated in star-shape-patterned planes (see folder GrandEventADetailed2, -> ask me for the 16 planes)
 
@@ -92,7 +94,7 @@ to be handed over as in [example.py](https://github.com/grand-mother/radiomorphi
 To produce the reference shower, antenna position following a star-shape pattern in shower coordinates  (vxB, vxvxB) have to be calculated. Each star-shape pattern forms one plane and should be positioned in a fixed distance to the Xmax of the simulated shower. Several of these planes in different fixed distances to Xmac should be simulated. 
 Therefor, one can use [ZHAireS](https://arxiv.org/abs/1107.1189) or [CoREAS](https://arxiv.org/abs/1301.2132v1) as long as the following procedure is respected:
 
-- the resulting electric field traces for each plane should be stored in a single subfolder, while a `MasterIndex`-file shall summarise the information about the parameter set of the shower (in ZHAireS convention!) as well as the names of the subfolder and the distances to Xmax of the each plane. See [example](https://github.com/grand-mother/radiomorphing/blob/master/examples/data/GrandEventADetailed2/MasterIndex).
+- the resulting electric field traces for each plane should be stored in a single subfolder, while a `MasterIndex`-file shall summarise the information about the parameter set of the shower (in ZHAireS convention!) as well as the names of the subfolder and the distances to Xmax of the each plane. See [example](https://github.com/grand-mother/grand-radiomorphing/blob/master/examples/data/GrandEventADetailed2/MasterIndex).
 
 - electric field traces have to be stored as:
 
@@ -106,7 +108,7 @@ Therefor, one can use [ZHAireS](https://arxiv.org/abs/1107.1189) or [CoREAS](htt
   Here, the antenna positions should be defined in the reference frame where the injection of the shower takes place at  
   (0m,0m,injectionheight in m)
  
- An example reference shower is given in [GRANDevent](https://github.com/grand-mother/radiomorphing/tree/master/examples/data/GrandEventADetailed2).
+ An example reference shower is given in [GRANDevent](https://github.com/grand-mother/grand-radiomorphing/tree/master/examples/data/GrandEventADetailed2).
 
  
 
@@ -116,8 +118,6 @@ Therefor, one can use [ZHAireS](https://arxiv.org/abs/1107.1189) or [CoREAS](htt
  - include CoREAS output directly as possible input 
  - decouple Askaryan and Geomagnetic component
  
-
-
 
 ## License
 

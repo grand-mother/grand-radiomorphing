@@ -1,3 +1,7 @@
+'''
+Performs the scaling of given electric field traces and the isometry of the antenna positions for a reference shower according to the parameters of a target shower
+'''
+
 from __future__ import print_function
 import os
 import sys
@@ -14,7 +18,19 @@ from utils import getCerenkovAngle, load_trace
 
 
 def _getAirDensity(h):
-  #% Using isothermal Model
+    '''Returns the air density at a specific height, usng an isothermal model as in ZHAireS
+   
+    Arguments:
+    ---------
+        h: float
+            height in meters
+ 
+    Returns:
+    -------
+        rho: float
+            air density in g/cm3
+    '''
+    
   rho_0 = 1.225#; % kg/m3
   M = 0.028966#;  %kg/mol
   g = 9.81#; %ms-2
@@ -26,6 +42,23 @@ def _getAirDensity(h):
 ###################################
 
 def _getXmax(primarytype, energy, zen2):
+    '''Returns the average xmax value for the primary in g/cm2
+   
+    Arguments:
+    ---------
+        primarytype: str
+            for now it just excepts 'electron' or 'pion'
+        energy: float
+            energy of the primary given in EeV
+        zen2: float
+            zenith angle of primary in radian
+        
+    Returns:
+    -------
+      Xmax: float
+         shower maximum in g/cm2
+    '''
+    
     # type of primary (electron or pion, energy in EeV, zen2 (GRAND) in rad
     if primarytype=='electron': # aprroximated by gamma shower
         a=82.5 # g/cm2
@@ -40,7 +73,26 @@ def _getXmax(primarytype, energy, zen2):
     return Xmax#/abs(np.cos(np.pi-zen2)) 
 
 def _dist_decay_Xmax(zen2, injh2, Xmax_primary): #zen2: zenith of target shower
-    #% Using isothermal Model
+    '''Returns the distance from injection to Xmax along the shower trajectory in m and its height above sealevel in meters
+   
+    Arguments:
+    ---------
+        zen2: float
+            zenith angle of primary in radian
+        injh2: float
+            injectionheight of particle in m
+        Xmax_primary: float
+            Xmax value in g/cm2
+        
+    Returns:
+    -------
+        h: float
+            height of shower maximum above sealevel in meters
+        ai: float 
+            distance from injection to Xmax along the shower trajectory in meters
+    '''
+    
+    #% Using isothermal Model as in ZHAireS
     rho_0 = 1.225*0.001#; % kg/m3 to 0.001g/cm3: 1g/cm3=1000kg/m3, since X given in g/cm2
     M = 0.028966#;  %kg/mol - 1000g/mol
     g = 9.81#; %ms-2
@@ -68,6 +120,47 @@ def _dist_decay_Xmax(zen2, injh2, Xmax_primary): #zen2: zenith of target shower
     return h, ai # Xmax_height in m, Xmax_distance along axis in m
 
 def _scalingfactors(E1, az1, zen1, injh1, E2, az2, zen2, injh2, phigeo,thetageo, altitude, primary):
+    '''Returns factors to scale the amplitude 
+   
+    Arguments:
+    ---------
+        E1: float
+            primary energy of reference shower in EeV
+        az1: float
+            azimuth angle of primary of reference shower in radian
+        zen1: float
+            zenith angle of primary of reference shower in radian
+        injh1: float
+            injectionheight of particle for reference shower in meters
+        E2: float
+            primary energy of target shower in EeV
+        az2: float
+            azimuth angle of primary of target shower in radian
+        zen2: float
+            zenith angle of primary of target shower in radian
+        injh2: float
+            injectionheight of particle for target shower in meters
+        phigeo, thetageo: floats
+            angles defining direction of mangetic field    
+        altitude: float
+            usually same as injh2, but there could be exceptions
+        primary: str
+            primary for target shower, for now it just excepts 'electron' or 'pion'
+            NOTE: for now primary of reference fixed to 'electron'
+        
+    Returns:
+    -------
+        kStretch: float
+            Streching factor for antenna grid
+        kE: float
+            scaling factor to account for energy
+        kAz: float
+            scaling factor to account for geomagnetic angle
+        kHeight: float
+            scaling factor to account for injection height
+    '''    
+    
+
     #print "altitude scaling ", altitude
     # 2: target shower, 1: generic shower
     #################### Energy scaling
@@ -118,9 +211,54 @@ def _scalingfactors(E1, az1, zen1, injh1, E2, az2, zen2, injh2, phigeo,thetageo,
 
 
 
-def _scalingpulse(dist1, E1, az1, zen1, injh1, E2, az2, zen2, injh2, primary, phigeo, thetageo, l,  positions, path, altitude): # hand over parameters from reference shower 1 and target shower 2, the number of the antenna in the star shape you would like to have  and all position of complete starshape (for strechting needed), the path to the folder containing the sim, and for now the frequencies (should be removed if one included the antenna response
+def _scalingpulse(dist1, E1, az1, zen1, injh1, E2, az2, zen2, injh2, primary, phigeo, thetageo, l,  positions, path, altitude): 
+    '''Returns factors to scale the amplitude 
+   
+    Arguments:
+    ---------
+        dist1: float
+            distance of plane with respect to Xmax for the reference shower in meters
+        E1: float
+            primary energy of reference shower in EeV
+        az1: float
+            azimuth angle of primary of reference shower in radian
+        zen1: float
+            zenith angle of primary of reference shower in radian
+        injh1: float
+            injectionheight of particle for reference shower in meters
+        dist2: float
+            distance of plane with respect to Xmax for the target shower in meters
+        E2: float
+            primary energy of target shower in EeV
+        az2: float
+            azimuth angle of primary of target shower in radian
+        zen2: float
+            zenith angle of primary of target shower in radian
+        injh2: float
+            injectionheight of particle for target shower in meters
+        primary: str
+            primary for target shower, for now it just excepts 'electron' or 'pion'
+            NOTE: for now primary of reference fixed to 'electron'
+        phigeo, thetageo: floats
+            angles defining direction of mangetic field    
+        positions: numpy array
+            list of antenna positions in the given plane
+        path: str
+            path to folder containing the files of the reference shower
+        altitude: float
+            usually same as injh2, but there could be exceptions
 
-#SCALING
+        
+    Returns:
+    -------
+        txt1: numpy array
+            scaled electric field traces
+        stretch2[l]: numpy array
+            antenna position after isometry
+    '''        
+
+
+###### SCALING factorss
     kStretch, kE, kAz, kHeight = _scalingfactors(E1, az1, zen1, injh1, E2, az2, zen2, injh2, phigeo, thetageo, altitude, primary)
     kAmp=kE*kAz*kHeight
     if l==0:
@@ -204,14 +342,7 @@ def _scalingpulse(dist1, E1, az1, zen1, injh1, E2, az2, zen2, injh2, primary, ph
     txt1.T[3] = EshowerA.T[0]* v2[2] +EshowerA.T[1]* vxB2[2] + EshowerA.T[2]*vxvxB2[2]
     
 
-#####
-
-
-        
-        
-
-
-###################################################
+###############################
 #### stretching of positions
 ###############################
 
@@ -297,12 +428,40 @@ def _scalingpulse(dist1, E1, az1, zen1, injh1, E2, az2, zen2, injh2, primary, ph
     return txt1, stretch2[l]
 
 
-
 ################################################################################
 
 def _scale_run(sim_dir, run, primary, E1, zen1, az1, injh1, dist1,
                E2, zen2, az2, injh2, altitude):
     """Scale the simulated traces of a run to the shower parameters
+       
+    Arguments:
+    ---------
+    
+        E1: float
+            primary energy of reference shower in EeV
+        az1: float
+            azimuth angle of primary of reference shower in radian
+        zen1: float
+            zenith angle of primary of reference shower in radian
+        injh1: float
+            injectionheight of particle for reference shower in meters
+        dist2: float
+            distance of plane with respect to Xmax for the target shower in meters
+        E2: float
+            primary energy of target shower in EeV
+        az2: float
+            azimuth angle of primary of target shower in radian
+        zen2: float
+            zenith angle of primary of target shower in radian
+        injh2: float
+            injectionheight of particle for target shower in meters
+        altitude: float
+            usually same as injh2, but there could be exceptions
+            
+    Returns:
+    ---------
+    stores the scaled electric field traces and the stretched antenna positions after the isometry for the target shower
+
     """
 
     # TODO: implement the magnetic field strength as an argument
@@ -327,14 +486,16 @@ def _scale_run(sim_dir, run, primary, E1, zen1, az1, injh1, dist1,
             "azimuth: {:.2f} deg".format(az),
             "height: {:.2f} m".format(injh))
         print(", ".join(parameters))
+        
+        
+    if dist1==4000.: # to reduce printout
+        #Print the reference parameter values
+        #print("# Reference shower", run)
+        print_parameters(E1, dist1, zen1, az1, injh1)
 
-    # Print the reference parameter values
-#    print("# Reference shower", run)
-    print_parameters(E1, dist1, zen1, az1, injh1)
-
-    # Print the target parameter values
-#    print("Target shower parameters")
-    print_parameters(E2, dist1, zen2, az2, injh2)
+        #Print the target parameter values
+        #print("Target shower parameters")
+        print_parameters(E2, dist1, zen2, az2, injh2)
 
     # Convert the angles from degrees to radians
     zen1, az1, zen2, az2 = map(np.deg2rad, (zen1, az1, zen2, az2))
@@ -353,16 +514,14 @@ def _scale_run(sim_dir, run, primary, E1, zen1, az1, injh1, dist1,
     #print(directory)
 
     end = positions.shape[0]
-    #### loop over all antenna positions, outer positions should be skipped
-    #### since then the interpolation doesnt work anymore (4 neighbours needed
+    ### loop over all antenna positions, outer positions should be skipped
+    ### since then the interpolation doesnt work anymore (4 neighbours needed
     for l in np.arange(0, end):
         # always hand over all need parameters,1 3D pulse, and all antenna
         # positions
         txt3, pos_new[l,:] = _scalingpulse(dist1, E1, az1, zen1, injh1, E2, az2,
                                            zen2, injh2, primary, phigeo,
                                            thetageo, l,  positions, path, altitude)
-
-
 
         ###### Writing to file for later use
         name3 = os.path.join(directory, "a{:}.trace".format(l))
@@ -373,8 +532,6 @@ def _scale_run(sim_dir, run, primary, E1, zen1, az1, injh1, dist1,
                     print("%.2f	%1.3e	%1.3e	%1.3e" % args, end='\n', file=FILE)
                 except SyntaxError:
                     print >> FILE, "%.2f	%1.3e	%1.3e	%1.3e" % args
-
-
 
 
     #print "scaled traces saved like this: {:}/a0.trace".format(directory)
@@ -394,7 +551,31 @@ def _scale_run(sim_dir, run, primary, E1, zen1, az1, injh1, dist1,
 
 def scale(sim_dir, primary, energy, zenith, azimuth, injection_height, altitude):
     """Scale all simulated traces to the shower parameters
+    
+    Arguments
+    ---------
+        sim_dir: str
+            path to older containing the files of the reference shower
+        primary: str
+            primary for target shower, for now it just excepts 'electron' or 'pion'
+        energy: float
+            primary energy of target shower in EeV
+        zenith: float
+            zenith angle of primary of target shower in radian
+        azimuth: float
+            azimuth angle of primary of target shower in radian
+        injection_height: float
+            injectionheight of particle for target shower in meters
+        altitude: float
+            usually same as injh2, but there could be exceptions
+    
+    Returns:
+    --------
+    -
+    Start the scaling and isometry process of the simulated reference shower acoording to target shower parameters
+    
     """
+    
     # Loop over runs
     steerfile_sim = os.path.join(sim_dir, "MasterIndex")
     with open(steerfile_sim, "r") as f:
