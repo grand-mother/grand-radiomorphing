@@ -174,7 +174,7 @@ def interpolate_trace(t1, trace1, x1, t2, trace2, x2, xdes, upsampling=None,  ze
     if zeroadding is True:
         max_element = len(trace1)  # to shorten the array after zeroadding
         xnew = numpy.linspace(t1[0], 1.01*t1[-1],
-                              (1.01*t1[-1]-t1[0])/(t1[2]-t1[1]))
+                              int((1.01*t1[-1]-t1[0])/(t1[2]-t1[1])))
         xnew = xnew*1.e-9  # ns -> s
         zeros = numpy.zeros(len(xnew)-max_element)
         f = trace1
