@@ -268,7 +268,7 @@ def _scalingpulse(dist1, E1, az1, zen1, injh1, E2, az2, zen2, injh2, primary, ph
     kStretch, kE, kAz, kHeight = _scalingfactors(
         E1, az1, zen1, injh1, E2, az2, zen2, injh2, phigeo, thetageo, altitude, primary)
     kAmp = kE*kAz*kHeight
-    if l == 0:
+    if l == 0: # just print them for the first position
         print('kStretch ', kStretch, ' kAmp ', kAmp,  ' kE ',
               kE, ' KAz ', kAz, ' kHeight ', kHeight)
 

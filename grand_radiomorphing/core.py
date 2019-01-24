@@ -27,7 +27,7 @@ def _ProjectPointOnLine(a, b, p):
     ab = b-a
     nrm = np.dot(ab, ab)
     if nrm <= 0.:
-        print(a, b)
+        raise ValueError('Projection of Point of Line failing')
     point = a + np.dot(ap, ab) / nrm * ab
     return point
 
@@ -89,7 +89,7 @@ def interpolate(path0, path1, path2, zenith=None, azimuth=None, injection_height
     #print('desired positions: ')
     #print(positions, len(positions))
     if len(positions) <= 1:
-        print("Files of desired positions has to consist of at least two positions, Bug to be fixed")
+        raise ValueError("Files of desired positions has to consist of at least two positions, Bug to be fixed")
 
     # Get the simulation settings
     steerfile_sim = os.path.join(path1, "MasterIndex")

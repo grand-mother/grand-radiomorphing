@@ -108,7 +108,7 @@ def interpolate_trace(t1, trace1, x1, t2, trace2, x2, xdes, upsampling=None,  ze
             ontrue: str
                 optional, True/False, just a plotting command
             flow, fhigh: floats
-                optional, define the frequency range for plotting, if desired (DISPLAY=1/0)
+                optional, define the frequency range for plotting, if desired (DISPLAY=True/False)
 
 
     Returns:
@@ -118,7 +118,7 @@ def interpolate_trace(t1, trace1, x1, t2, trace2, x2, xdes, upsampling=None,  ze
         tracedes: numpy array, float
             interpolated electric field component at desired antenna position
     """
-    DISPLAY = 0
+    DISPLAY = False
 
     # hand over time traces of one efield component -t1=time, trace1=efield- and the position x1 of the first antenna, the same for the second antenna t2,trace2, x2.
     # xdes is the desired antenna position (m) where you would like to have the efield trace in time
@@ -232,8 +232,8 @@ def interpolate_trace(t1, trace1, x1, t2, trace2, x2, xdes, upsampling=None,  ze
     phides = weight1 * phi_unwrapped + weight2 * phi2_unwrapped
     if ontrue is not None:
         print(phides)
-    if DISPLAY:
-        phides2 = phides.copy()
+    #if DISPLAY:
+        #phides2 = phides.copy()
 
     # re-unwrap: get -pi to +pi range back and check whether phidesis inbetwwen
     phides = numpy.mod(phides + numpy.pi, 2. * numpy.pi) - numpy.pi
@@ -245,14 +245,14 @@ def interpolate_trace(t1, trace1, x1, t2, trace2, x2, xdes, upsampling=None,  ze
     # Since the amplitude shows a continuous unipolar shape, a linear interpolation is sufficient
 
     Ampdes = weight1 * Amp + weight2 * Amp2
-    if DISPLAY:
-        Ampdes2 = Ampdes.copy()
+    #if DISPLAY:
+        #Ampdes2 = Ampdes.copy()
 
 # inverse FFT for the signal at the desired position
     Ampdes = Ampdes.astype(numpy.complex64)
     phides = phides.astype(numpy.complex64)
-    if DISPLAY:
-        phides2 = phides2.astype(numpy.complex64)
+    #if DISPLAY:
+        #phides2 = phides2.astype(numpy.complex64)
     Ampdes *= numpy.exp(1j * phides)
 
     tracedes = (numpy.fft.irfft(Ampdes))
@@ -260,7 +260,7 @@ def interpolate_trace(t1, trace1, x1, t2, trace2, x2, xdes, upsampling=None,  ze
 
     # PLOTTING
 
-    if DISPLAY == 1:
+    if DISPLAY:
         import matplotlib.pyplot as plt
         import pylab
 
