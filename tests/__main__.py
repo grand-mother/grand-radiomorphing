@@ -4,6 +4,7 @@ Run all unit tests for the grand_radiomorphing package
 """
 import os
 import unittest
+import sys
 
 
 def suite():
@@ -14,4 +15,6 @@ def suite():
 
 
 if __name__ == "__main__":
-    unittest.TextTestRunner(verbosity=2).run(suite())
+    runner = unittest.TextTestRunner(verbosity=2)
+    r = not runner.run(suite()).wasSuccessful()
+    sys.exit(r)

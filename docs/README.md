@@ -19,16 +19,19 @@ This full parametrisation of the radio signal based on a simulated reference sho
 
 ## Installation
 
+_GRAND packages require python3.7. If can be installed from the
+[tarball](https://www.python.org/downloads) on Linux or with brew on OSX._
+
 The latest stable version of this package can be installed from [PyPi][PYPI]
 using [pip][PIP], e.g. as:
 ```bash
-pip install --user grand-radiomorphing
+pip3 install --user grand-radiomorphing
 ```
 
 Alternatively one can also install the latest development commit directly from
 [GitHub][GITHUB], as:
 ```bash
-pip install --user git+https://github.com/grand-mother/grand-radiomorphing.git@master
+pip3 install --user git+https://github.com/grand-mother/grand-radiomorphing.git@master
 ```
 
 
