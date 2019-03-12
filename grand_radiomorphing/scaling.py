@@ -125,8 +125,7 @@ def _dist_decay_Xmax(zen2, injh2, Xmax_primary):  # zen2: zenith of target showe
     return h, ai  # Xmax_height in m, Xmax_distance along axis in m
 
 
-def _scalingfactors(E1, az1, zen1, injh1, E2, az2, zen2, injh2, 
-                    phigeo, thetageo, altitude, primary):
+def _scalingfactors(E1, az1, zen1, injh1, E2, az2, zen2, injh2, phigeo, thetageo, altitude, primary):
     '''Returns factors to scale the amplitude 
 
     Parameters:
@@ -220,8 +219,7 @@ def _scalingfactors(E1, az1, zen1, injh1, E2, az2, zen2, injh2,
     return kStretch, kE, kAz, kHeight
 
 
-def _scalingpulse(dist1, E1, az1, zen1, injh1, E2, az2, zen2, injh2, primary, 
-                  phigeo, thetageo, l,  positions, path, altitude):
+def _scalingpulse(dist1, E1, az1, zen1, injh1, E2, az2, zen2, injh2, primary, phigeo, thetageo, l,  positions, path, altitude):
     '''Returns factors to scale the amplitude 
 
     Parameters:
@@ -247,8 +245,7 @@ def _scalingpulse(dist1, E1, az1, zen1, injh1, E2, az2, zen2, injh2, primary,
         injh2: float
             injectionheight of particle for target shower in meters
         primary: str
-            primary for target shower, for now it just excepts 'electron' or 'pion'
-            NOTE: for now primary of reference fixed to 'electron'
+            primary for target shower, for now it just excepts 'electron' or 'pion', (for now primary of reference fixed to 'electron')
         phigeo, thetageo: floats
             angles defining direction of mangetic field    
         positions: numpy array

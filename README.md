@@ -7,7 +7,7 @@
 [![Coding style](https://img.shields.io/badge/pep8-60%25-yellowgreen.svg)](https://github.com/grand-mother/grand-radiomorphing/blob/master/docs/.stats.json)
 [![Code coverage](https://codecov.io/gh/grand-mother/grand-radiomorphing/branch/master/graph/badge.svg)](https://codecov.io/gh/grand-mother/grand-radiomorphing)
 [![Build status](https://travis-ci.com/grand-mother/grand-radiomorphing.svg?branch=master)](https://travis-ci.com/grand-mother/grand-radiomorphing)
-[![Documentation](https://img.shields.io/badge/docs-81%25-green.svg)](https://grand-mother.github.io/site/reports.html?grand-radiomorphing/docs)
+[![Documentation](https://img.shields.io/badge/docs-88%25-brightgreen.svg)](https://grand-mother.github.io/site/reports.html?grand-radiomorphing/docs)
 [![PyPi version](https://img.shields.io/pypi/v/g.svg)](https://pypi.org/project/grand-radiomorphing)
 
 # GRAND Radiomorphing
