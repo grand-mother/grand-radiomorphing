@@ -1,5 +1,6 @@
 '''
-Performs the scaling of given electric field traces and the isometry of the antenna positions for a reference shower according to the parameters of a target shower
+Performs the scaling of given electric field traces and the isometry 
+of the antenna positions for a reference shower according to the parameters of a target shower
 '''
 from __future__ import print_function
 
@@ -20,7 +21,7 @@ from utils import getCerenkovAngle, load_trace
 def _getAirDensity(h):
     '''Returns the air density at a specific height, usng an isothermal model as in ZHAireS
 
-    Arguments:
+    Parameters:
     ---------
         h: float
             height in meters
@@ -45,7 +46,7 @@ def _getAirDensity(h):
 def _getXmax(primarytype, energy, zen2):
     '''Returns the average xmax value for the primary in g/cm2
 
-    Arguments:
+    Parameters:
     ---------
         primarytype: str
             for now it just excepts 'electron' or 'pion'
@@ -77,7 +78,7 @@ def _getXmax(primarytype, energy, zen2):
 def _dist_decay_Xmax(zen2, injh2, Xmax_primary):  # zen2: zenith of target shower
     '''Returns the distance from injection to Xmax along the shower trajectory in m and its height above sealevel in meters
 
-    Arguments:
+    Parameters:
     ---------
         zen2: float
             zenith angle of primary in radian
@@ -124,10 +125,11 @@ def _dist_decay_Xmax(zen2, injh2, Xmax_primary):  # zen2: zenith of target showe
     return h, ai  # Xmax_height in m, Xmax_distance along axis in m
 
 
-def _scalingfactors(E1, az1, zen1, injh1, E2, az2, zen2, injh2, phigeo, thetageo, altitude, primary):
+def _scalingfactors(E1, az1, zen1, injh1, E2, az2, zen2, injh2, 
+                    phigeo, thetageo, altitude, primary):
     '''Returns factors to scale the amplitude 
 
-    Arguments:
+    Parameters:
     ---------
         E1: float
             primary energy of reference shower in EeV
@@ -217,10 +219,11 @@ def _scalingfactors(E1, az1, zen1, injh1, E2, az2, zen2, injh2, phigeo, thetageo
     return kStretch, kE, kAz, kHeight
 
 
-def _scalingpulse(dist1, E1, az1, zen1, injh1, E2, az2, zen2, injh2, primary, phigeo, thetageo, l,  positions, path, altitude):
+def _scalingpulse(dist1, E1, az1, zen1, injh1, E2, az2, zen2, injh2, primary, 
+                  phigeo, thetageo, l,  positions, path, altitude):
     '''Returns factors to scale the amplitude 
 
-    Arguments:
+    Parameters:
     ---------
         dist1: float
             distance of plane with respect to Xmax for the reference shower in meters
@@ -345,7 +348,8 @@ def _scalingpulse(dist1, E1, az1, zen1, injh1, E2, az2, zen2, injh2, primary, ph
     vxvxB2 = np.cross(v2, vxB2)
     vxvxB2 = vxvxB2/np.linalg.norm(vxvxB2)
 
-    # Backtrafo of efield from shower coord (1,2,3) after scaling and/or stretching using the target angles
+    # Backtrafo of efield from shower coord (1,2,3) after scaling 
+    # and/or stretching using the target angles
     txt1.T[1] = EshowerA.T[0] * v2[0] + EshowerA.T[1] * \
         vxB2[0] + EshowerA.T[2]*vxvxB2[0]
     txt1.T[2] = EshowerA.T[0] * v2[1] + EshowerA.T[1] * \
@@ -371,7 +375,8 @@ def _scalingpulse(dist1, E1, az1, zen1, injh1, E2, az2, zen2, injh2, primary, ph
     offinx = np.mean(positions[:, 0])
     pos = np.zeros([len(positions[:, 1]), 3])
 
-    # rotate into shower coordinates for preparation to get the strechted antenna position to compare to
+    # rotate into shower coordinates for preparation to get the 
+    # strechted antenna position to compare to
     GetUVW = UVWGetter(offinx, offiny, offinz, zen1, az1, phigeo, thetageo)
     for i in np.arange(0, len(positions[:, 1])):
         pos[i, :] = GetUVW(positions[i, :], )
@@ -447,7 +452,7 @@ def _scale_run(sim_dir, run, primary, E1, zen1, az1, injh1, dist1,
                E2, zen2, az2, injh2, altitude):
     """Scale the simulated traces of a run to the shower parameters
 
-    Arguments:
+    Parameters:
     ---------
 
         E1: float
@@ -560,7 +565,7 @@ def _scale_run(sim_dir, run, primary, E1, zen1, az1, injh1, dist1,
 def scale(sim_dir, primary, energy, zenith, azimuth, injection_height, altitude):
     """Scale all simulated traces to the shower parameters
 
-    Arguments
+    Parameters
     ---------
         sim_dir: str
             path to older containing the files of the reference shower

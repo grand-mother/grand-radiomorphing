@@ -1,20 +1,25 @@
 '''Script to perform an interpolation between to electric field traces at a desired position
 (called by core.py)
 
-It needs as input antenna position 1 and 2, their traces (filtered or not) in one component, their time , and the desired antenna position
+It needs as input antenna position 1 and 2, their traces (filtered or not) in one component, their time, 
+and the desired antenna position
 and returns the trace ( in x,y,z coordinate system) and the time from the desired antenna position
 Zeroadding and upsampling of the signal are optional functions
 
 IMPORTANT NOTE:
 The interpolation of the phases includes the
 interpolation of the signal arrival time. A linear interpolation implies a plane radio
-emission wave front, which is a simplification as it is hyperbolic in shape. However, the wave front can be estimated as a plane between two simu-
+emission wave front, which is a simplification as it is hyperbolic in shape. However, 
+the wave front can be estimated as a plane between two simu-
 lated observer positions for a sufficiently dense grid of observers, as then parts of
 the wave front are linear on small scales.
 
-This script bases on the diploma thesis of Ewa Holt (KIT, 2013) in the context of AERA/AUGER. It is based on the interpolation of the amplitude and the pahse in the frequency domain. 
-This can lead to misidentifiying of the correct phase. We are working on the interplementaion on a more robust interpolation of the signal.
-Feel free to include it if you have some time to work on it. The script is completely modular so that single parts can be substitute easily.
+This script bases on the diploma thesis of Ewa Holt (KIT, 2013) in the context of AERA/AUGER. 
+It is based on the interpolation of the amplitude and the pahse in the frequency domain. 
+This can lead to misidentifiying of the correct phase. We are working on the interplementaion 
+on a more robust interpolation of the signal.
+Feel free to include it if you have some time to work on it. The script is completely modular 
+so that single parts can be substitute easily.
 '''
 
 import numpy
@@ -27,7 +32,7 @@ import operator
 # Not needed at the moment, removed later
 # def rfftfreq(n, d=1.0, nyquist_domain=1):
 # '''calcs frequencies for rfft, exactly as numpy.fft.rfftfreq, lacking that function in my old numpy version.
-# Arguments:
+# Parameters:
 # ---------
 #n: int
 # Number of points.
@@ -56,7 +61,7 @@ import operator
 def unwrap(phi, ontrue=None):
     """Unwrap the phase to a strictly decreasing function.
 
-    Arguments:
+    Parameters:
     ----------
         phi: numpy array, float
             phase of the signal trace
@@ -85,7 +90,7 @@ def unwrap(phi, ontrue=None):
 def interpolate_trace(t1, trace1, x1, t2, trace2, x2, xdes, upsampling=None,  zeroadding=None, ontrue=None, flow=60.e6, fhigh=200.e6):
     """Interpolation of signal traces at the specific position in the frequency domain
 
-    Arguments:
+    Parameters:
     ----------
             t1: numpy array, float
                 time in ns of antenna 1
@@ -120,7 +125,8 @@ def interpolate_trace(t1, trace1, x1, t2, trace2, x2, xdes, upsampling=None,  ze
     """
     DISPLAY = False
 
-    # hand over time traces of one efield component -t1=time, trace1=efield- and the position x1 of the first antenna, the same for the second antenna t2,trace2, x2.
+    # hand over time traces of one efield component -t1=time, trace1=efield- and the position 
+    # x1 of the first antenna, the same for the second antenna t2,trace2, x2.
     # xdes is the desired antenna position (m) where you would like to have the efield trace in time
     # if necessary you have to do an upsampling of the trace: upsampling=On
     # onTrue=On would give you printings to the terminal to check for correctness
@@ -132,7 +138,8 @@ def interpolate_trace(t1, trace1, x1, t2, trace2, x2, xdes, upsampling=None,  ze
     c = 299792458.e-9  # m/ns
 
     # calculating weights: should be done with the xyz coordinates
-    # since in star shape pattern it is mor a radial function connection the poistion of same signal as linear go for that solution.
+    # since in star shape pattern it is mor a radial function connection the poistion of 
+    # same signal as linear go for that solution.
     # if lines ar on a line, it will give the same result as before
     tmp1 = numpy.linalg.norm(x2 - xdes)
     tmp2 = numpy.linalg.norm(x1 - xdes)

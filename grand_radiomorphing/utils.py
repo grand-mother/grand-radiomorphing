@@ -7,12 +7,14 @@ import numpy
 def load_trace(directory, index, suffix=".trace"):
     """Load data from a trace file
 
-    Args:
+   Parameters
+   ---------
         directory (str): path to file
         index (ind): index number of antenna
         suffix (str): optional, suffix of file
 
-    Returns:
+   Returns
+   ---------
         numpy array
     """
 
@@ -27,7 +29,7 @@ def getn(h):
        Reference:
         Zhaires (see email M. Tueros 25/11/2016)
 
-   Arguments
+   Parameters
    ---------
       h: float
             height in meters at which one wants to have the refractive index
@@ -45,7 +47,7 @@ def getn(h):
 def getCerenkovAngle(h):
     """Get the Cerenkov angle
 
-    Arguments
+    Parameters
     ---------
        h: float
              height in meters at which one wants to have the Cherenkov angle
@@ -62,7 +64,7 @@ def getCerenkovAngle(h):
 def get_integratedn(zen2, injh2, position):
     '''Returns the effectiv/integrated refractive index at a specific height.
 
-    Arguments:
+    Parameters:
     ---------
        zen2: float
           zenith angle in radian at the starting point at height injh2
@@ -131,7 +133,7 @@ def get_integratedn(zen2, injh2, position):
 def mag(x):
     """Calculate absolute value of x
 
-    Arguments
+    Parameters
     ---------
       x: numpy array, floats
             vector

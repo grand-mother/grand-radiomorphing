@@ -6,7 +6,7 @@ import numpy
 def get_rotation(zen, az, phigeo, bfieldangle):
     """Utility function for getting the rotation matrix between frames
 
-    Arguments:
+    Parameters:
     ----------
         zen: float
             zenith angles of primary in radian
@@ -36,7 +36,7 @@ def get_rotation(zen, az, phigeo, bfieldangle):
 def UVWGetter(cx, cy, cz, zen, az, phigeo, bfieldangle):
     """Closure for getting coordinates in the shower frame.
 
-    Arguments:
+    Parameters:
     ----------
         cx,cy,cz: floats
             positions vector, in meters
@@ -61,7 +61,7 @@ def UVWGetter(cx, cy, cz, zen, az, phigeo, bfieldangle):
 def XYZGetter(cx, cy, cz, zen, az, phigeo, bfieldangle):
     """Closure for getting back to the main frame
 
-    Arguments:
+    Parameters:
     ----------
         cx,cy,cz: floats
             positions vector, in meters
