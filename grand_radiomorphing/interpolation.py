@@ -65,6 +65,8 @@ def unwrap(phi, ontrue=None):
     ----------
         phi: numpy array, float
             phase of the signal trace
+        ontrue: str
+            printing option, default=None
     Returns:
     ----------
         phi_unwrapped: numpy array, float
@@ -112,9 +114,10 @@ def interpolate_trace(t1, trace1, x1, t2, trace2, x2, xdes, upsampling=None,  ze
                 optional, True/False, adds zeros at the end of the trace of needed
             ontrue: str
                 optional, True/False, just a plotting command
-            flow, fhigh: floats
-                optional, define the frequency range for plotting, if desired (DISPLAY=True/False)
-
+            flow: float
+                lower frequency - optional, define the frequency range for plotting, if desired (DISPLAY=True/False)
+            fhigh: float
+                higher frequency - optional, define the frequency range for plotting, if desired (DISPLAY=True/False)
 
     Returns:
     ----------

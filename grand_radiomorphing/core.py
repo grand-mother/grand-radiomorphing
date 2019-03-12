@@ -23,6 +23,20 @@ from utils import getn, get_integratedn, mag
 
 
 def _ProjectPointOnLine(a, b, p):
+    ''' does a projection of a vector on an line 
+    Parameters
+    ----------
+        a: numpy array
+            define vector 1 of line
+        b: numpy array
+            define vector 2 of line
+        p: numpy array
+            vector to prjection
+    Returns:
+    ----------
+        point: numpy array
+            projection of vector p
+    '''
     ap = p-a
     ab = b-a
     nrm = np.dot(ab, ab)
@@ -33,6 +47,22 @@ def _ProjectPointOnLine(a, b, p):
 
 
 def _ProjectPointOnPlane(a, b, d, p):
+    ''' does a projection of a vector on a plane
+    Parameters
+    ----------
+        a: numpy array
+            define vector 1 in plane
+        b: numpy array
+            define vector 2 in plane
+        d: numpy array
+            define position vector of plane
+        p: numpy array
+            vector to prjection
+    Returns:
+    ----------
+        point: numpy array
+            projection of vector p
+    '''
     n = np.cross(a, b)
     n = n/np.linalg.norm(n)
     t = (np.dot(d, n)-np.dot(p, n))/np.dot(n, n)
@@ -58,6 +88,8 @@ def interpolate(path0, path1, path2, zenith=None, azimuth=None, injection_height
             zenith angle of the morphed shower, in degrees
         azimuth: float
             azimuth angle of the morphed shower, in degrees
+        injection_height: float
+            geometrical height of shower injection
         scaled: bool 
             flag for interpolating from a non scaled shower
         

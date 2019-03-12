@@ -9,9 +9,12 @@ def load_trace(directory, index, suffix=".trace"):
 
    Parameters
    ---------
-        directory (str): path to file
-        index (ind): index number of antenna
-        suffix (str): optional, suffix of file
+        directory: str 
+            path to file
+        index: ind
+            index number of antenna
+        suffix: str 
+            optional, suffix of file
 
    Returns
    ---------

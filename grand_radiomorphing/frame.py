@@ -38,13 +38,19 @@ def UVWGetter(cx, cy, cz, zen, az, phigeo, bfieldangle):
 
     Parameters:
     ----------
-        cx,cy,cz: floats
-            positions vector, in meters
+        cx: float
+            position vector - x component, in meters
+        cy: float
+            position vector - y component, in meters
+        cz: float
+            position vector - z component, in meters
         zen: float
             zenith angles of primary in radian
         az: float
             azmimuth angle in radian
-        phigeo, bfieldangle: floats
+        phigeo: float
+            magnetic field angles in radian
+        bfieldangle: floats
             magnetic field angles in radian
     Returns: 
     ---------
@@ -63,8 +69,12 @@ def XYZGetter(cx, cy, cz, zen, az, phigeo, bfieldangle):
 
     Parameters:
     ----------
-        cx,cy,cz: floats
-            positions vector, in meters
+        cx: float
+            position vector - x component, in meters
+        cy: float
+            position vector - y component, in meters
+        cz: float
+            position vector - z component, in meters            
         zen: float
             zenith angles of primary in radian
         az: float
