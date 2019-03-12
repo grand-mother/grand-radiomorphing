@@ -246,7 +246,9 @@ def _scalingpulse(dist1, E1, az1, zen1, injh1, E2, az2, zen2, injh2, primary, ph
             injectionheight of particle for target shower in meters
         primary: str
             primary for target shower, for now it just excepts 'electron' or 'pion', (for now primary of reference fixed to 'electron')
-        phigeo, thetageo: floats
+        phigeo: float
+            angles defining direction of mangetic field   
+        thetageo: float
             angles defining direction of mangetic field    
         positions: numpy array
             list of antenna positions in the given plane
@@ -446,8 +448,7 @@ def _scalingpulse(dist1, E1, az1, zen1, injh1, E2, az2, zen2, injh2, primary, ph
 
 ################################################################################
 
-def _scale_run(sim_dir, run, primary, E1, zen1, az1, injh1, dist1,
-               E2, zen2, az2, injh2, altitude):
+def _scale_run(sim_dir, run, primary, E1, zen1, az1, injh1, dist1, E2, zen2, az2, injh2, altitude):
     """Scale the simulated traces of a run to the shower parameters
 
     Parameters:
