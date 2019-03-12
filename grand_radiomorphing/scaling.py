@@ -154,8 +154,7 @@ def _scalingfactors(E1, az1, zen1, injh1, E2, az2, zen2, injh2,
         altitude: float
             usually same as injh2, but there could be exceptions
         primary: str
-            primary for target shower, for now it just excepts 'electron' or 'pion'
-            NOTE: for now primary of reference fixed to 'electron'
+            primary for target shower, for now it just excepts 'electron' or 'pion' (for now primary of reference fixed to 'electron')
 
     Returns:
     -------
