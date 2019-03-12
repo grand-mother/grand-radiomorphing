@@ -4,10 +4,10 @@
     One should edit the docs/README.md file instead.
 -->
 
-[![Coding style](https://img.shields.io/badge/pep8-62%25-yellowgreen.svg)](https://github.com/grand-mother/grand-radiomorphing/blob/master/docs/.stats.json)
+[![Coding style](https://img.shields.io/badge/pep8-61%25-yellowgreen.svg)](https://github.com/grand-mother/grand-radiomorphing/blob/master/docs/.stats.json)
 [![Code coverage](https://codecov.io/gh/grand-mother/grand-radiomorphing/branch/master/graph/badge.svg)](https://codecov.io/gh/grand-mother/grand-radiomorphing)
 [![Build status](https://travis-ci.com/grand-mother/grand-radiomorphing.svg?branch=master)](https://travis-ci.com/grand-mother/grand-radiomorphing)
-[![Documentation](https://img.shields.io/badge/docs-28%25-orange.svg)](https://grand-mother.github.io/site/reports.html?grand-radiomorphing/docs)
+[![Documentation](https://img.shields.io/badge/docs-77%25-green.svg)](https://grand-mother.github.io/site/reports.html?grand-radiomorphing/docs)
 [![PyPi version](https://img.shields.io/pypi/v/g.svg)](https://pypi.org/project/grand-radiomorphing)
 
 # GRAND Radiomorphing
