@@ -12,7 +12,9 @@ def get_rotation(zen, az, phigeo, bfieldangle):
             zenith angles of primary in radian
         az: float
             azmimuth angle in radian
-        phigeo, bfieldangle: floats
+        phigeo: float
+            magnetic field angles in radian
+        bfieldangle: float
             magnetic field angles in radian
     Returns: 
     ---------
@@ -79,7 +81,9 @@ def XYZGetter(cx, cy, cz, zen, az, phigeo, bfieldangle):
             zenith angles of primary in radian
         az: float
             azmimuth angle in radian
-        phigeo, bfieldangle: floats
+        phigeo: float
+            magnetic field angles in radian
+        bfieldangle: float
             magnetic field angles in radian
     Returns: 
     ---------

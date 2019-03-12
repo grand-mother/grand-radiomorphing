@@ -225,7 +225,7 @@ def _scalingpulse(dist1, E1, az1, zen1, injh1, E2, az2, zen2, injh2, primary,
                   phigeo, thetageo, l,  positions, path, altitude):
     '''Returns factors to scale the amplitude 
 
-    Arguments:
+    Parameters:
     ---------
         dist1: float
             distance of plane with respect to Xmax for the reference shower in meters
@@ -454,7 +454,7 @@ def _scale_run(sim_dir, run, primary, E1, zen1, az1, injh1, dist1,
                E2, zen2, az2, injh2, altitude):
     """Scale the simulated traces of a run to the shower parameters
 
-    Arguments:
+    Parameters:
     ---------
 
         E1: float
