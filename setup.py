@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from framework import setup_package
+from grand_pkg import setup_package
 
 
 # The package version
@@ -13,7 +13,7 @@ MICRO = 0
 # classifiers, see:
 #     https://pypi.org/pypi?%3Aaction=list_classifiers
 EXTRA_CLASSIFIERS = (
-    "Development Status :: 1 - Planning",
+    "Development Status :: 3 - Alpha",
 )
 
 
