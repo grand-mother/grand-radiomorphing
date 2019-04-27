@@ -7,7 +7,7 @@ import unittest
 import sys
 
 import grand_radiomorphing
-from framework import git
+from grand_pkg import git
 
 
 try:
@@ -21,7 +21,8 @@ else:
 
         def test_hash(self):
             githash = git("rev-parse", "HEAD")
-            self.assertEqual(githash.strip(), grand_radiomorphing.version.__githash__)
+            self.assertEqual(githash.strip(),
+                             grand_radiomorphing.version.__git__["sha1"])
 
         def test_version(self):
             self.assertIsNotNone(grand_radiomorphing.version.__version__)

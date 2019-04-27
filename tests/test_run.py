@@ -4,7 +4,8 @@ import shutil
 from os.path import split, join, realpath
 import sys
 
-from framework import init, RunContext
+#from grand_pkg import init, RunContext
+from grand_pkg import RunContext
 root_dir = realpath(join(split(__file__)[0], ".."))
 sys.path.append(join(root_dir, "examples"))
 import example

@@ -9,6 +9,7 @@ version.py
 dist
 build
 *.egg-info
+examples/data
 
 # Ignore temporary coverage reports
 .coverage

@@ -165,8 +165,8 @@ def interpolate(path0, path1, path2, zenith=None, azimuth=None, injection_height
 
     # Finding the Neighbours:  In principal one would like to check which star shape pattern are the closest etc.
     # it reads in all star shape pattern positions from the simulations you hand over
-    positions_sims = np.zeros([len(sims), 184, 3])
-    print("Attention: read-in fixed to 184 antennas max. - to be fixed at some point")
+    positions_sims = np.zeros([len(sims), 120, 3])
+    print("Attention: read-in fixed to 120 antennas max. - to be fixed at some point")
     for i in np.arange(0, len(sims)):  # loop over simulated antenna positions
 
         posfile = path1 + str(sims[i]) + '/antpos.dat'
