@@ -121,6 +121,9 @@ Therefor, one can use [ZHAireS](https://arxiv.org/abs/1107.1189) or [CoREAS](htt
  - hand over magnetic field configuration as parameter
  - include CoREAS output directly as possible input 
  - decouple Askaryan and Geomagnetic component
+ - re-write the critical parts in a lower level language, e.g. C or ispc (in order do exploit CPU vectorisation) or to target GPUs.
+ - use the new coordinates transforms from the GRAND packag (already implemented in C).
+
  
 
 ## License
